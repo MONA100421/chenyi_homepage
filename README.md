@@ -8,7 +8,7 @@
 
 vCard is a fully responsive personal portfolio website, responsive for all devices, built using HTML, CSS, and JavaScript.
 
-Live Demo: https://MONA100421.github.io/chenyi_homepage/chenyi_homepage/index.html
+Live Demo: https://MONA100421.github.io/chenyi_homepage/index.html
 
 ## Demo
 
