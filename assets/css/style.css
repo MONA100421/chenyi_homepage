@@ -460,7 +460,8 @@ main {
   left: 0;
   width: 100%;
   background: hsla(240, 1%, 17%, 0.75);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* 支援 Safari 和其他 Webkit 瀏覽器 */
+  backdrop-filter: blur(10px); /* 支援較新的 Chrome、Firefox 等瀏覽器 */
   border: 1px solid var(--jet);
   border-radius: 12px 12px 0 0;
   box-shadow: var(--shadow-2);
