@@ -36,19 +36,19 @@ if not mail_username or not mail_password:
 
 def fetch_weather_data(city):
     # 使用模塊級別的 api_key 變量，而不是每次函數內部都調用環境變量
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
 
     try:
         response = requests.get(url)
         response.raise_for_status()  # 如果狀態碼不是 200，則拋出異常
         data = response.json()
         
-        # 檢查 API 返回的城市是否有效
+        # 檢查 APIß 返回的城市是否有效
         if data.get('cod') != 200:
             return None
         
         # 將開爾文溫度轉換為攝氏度
-        temp_in_celsius = data['main']['temp'] - 273.15
+        temp_in_celsius = data['main']['temp']
         
         return {
             'city': data['name'],
