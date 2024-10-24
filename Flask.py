@@ -28,9 +28,13 @@ def fetch_weather_data(city):
         response = requests.get(url)
         response.raise_for_status()  # 如果狀態碼不是 200，則拋出異常
         data = response.json()
+        
+        # 將開爾文溫度轉換為攝氏度
+        temp_in_celsius = data['main']['temp'] - 273.15
+        
         return {
             'city': data['name'],
-            'temperature': data['main']['temp'],
+            'temperature': round(temp_in_celsius, 2),  # 四捨五入到小數點兩位
             'description': data['weather'][0]['description']
         }
     except requests.exceptions.RequestException as e:
