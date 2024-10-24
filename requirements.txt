@@ -1,5 +1,4 @@
 appdirs==1.4.4
-Django==5.1.1
 Flask==2.2.2
 Flask==2.2.2
 gunicorn
