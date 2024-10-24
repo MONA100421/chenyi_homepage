@@ -159,54 +159,72 @@ for (let i = 0; i < navigationLinks.length; i++) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Select the input field and weather info container
-  const cityInput = document.getElementById('city');  // Ensure this is the correct ID
-  const weatherInfo = document.querySelector('.weather-info');  // Ensure this matches your HTML
+  const form = document.querySelector('form[data-form]');
+  const cityInput = document.getElementById('city');
+  const weatherInfo = document.querySelector('.weather-info');
 
-  // Fetch the default city weather on page load (Los Angeles)
-  const defaultCity = 'Los Angeles';
-  fetchWeather(defaultCity);
-
-  // Handle the "Enter" keypress event to fetch weather for the entered city
+  // 處理回車鍵按下事件
   cityInput.addEventListener('keypress', function (event) {
       if (event.key === 'Enter') {
-          event.preventDefault();  // Prevent the default form submission
-          const city = cityInput.value.trim();  // Get the entered city and remove any extra spaces
-          
-          if (city) {
-              fetchWeather(city);  // Call the fetchWeather function with the entered city
-          } else {
-              weatherInfo.innerHTML = `<p>Please enter a city name.</p>`;
-          }
+          event.preventDefault(); // 阻止表單的默認提交行為
+          const city = cityInput.value;
+
+          // 發送 AJAX 請求到 /contact 而不是 /
+          fetch('/contact', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ city: city }), // 將用戶輸入的城市發送給後端
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.weather) {
+                  // 更新天氣資訊到頁面
+                  weatherInfo.innerHTML = `
+                      <p><strong>City:</strong> ${data.weather.city}</p>
+                      <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
+                      <p><strong>Condition:</strong> ${data.weather.description}</p>
+                  `;
+              } else {
+                  weatherInfo.innerHTML = `<p>Weather information is currently unavailable.</p>`;
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
+          });
       }
   });
-
-  // Function to fetch weather information for a given city
-  function fetchWeather(city) {
-      fetch('/', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ city: city }),  // Send city data to the backend
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.weather) {
-              // Update the weather info on the page
-              weatherInfo.innerHTML = `
-                  <p><strong>City:</strong> ${data.weather.city}</p>
-                  <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
-                  <p><strong>Condition:</strong> ${data.weather.description}</p>
-              `;
-          } else {
-              weatherInfo.innerHTML = `<p>Weather information is currently unavailable for "${city}".</p>`;
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
-      });
-  }
 });
+
+
+// Function to fetch weather information for a given city
+function fetchWeather(city) {
+  fetch('/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ city: city }),  // Send city data to the backend
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.weather) {
+          // Update the weather info on the page
+          weatherInfo.innerHTML = `
+              <p><strong>City:</strong> ${data.weather.city}</p>
+              <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
+              <p><strong>Condition:</strong> ${data.weather.description}</p>
+          `;
+      } else {
+          weatherInfo.innerHTML = `<p>Weather information is currently unavailable for "${city}".</p>`;
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
+  });
+}
+
 

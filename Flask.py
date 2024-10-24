@@ -3,157 +3,105 @@ from flask_mail import Mail, Message
 from flask_cors import CORS
 from dotenv import load_dotenv
 import requests
-import feedparser
 import os
 import logging
 
+# 配置日誌記錄
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-load_dotenv()  # 加載 .env 文件
+# 加載環境變量
+load_dotenv()  # 確保 .env 文件中的 API 金鑰等被加載
 
 app = Flask(__name__, static_folder='assets')
-CORS(app)
+CORS(app)  # 允許跨域請求
 
-# 一次性讀取 API 金鑰
+# 獲取 API 金鑰和郵件設置
 api_key = os.environ.get('OPENWEATHER_API_KEY')
-if not api_key:
-    logger.error("API key not found in environment variables.")
-
-# 配置郵件設置
-app.config['MAIL_SERVER'] = 'smtp.example.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-
-mail = Mail(app)
 mail_username = os.environ.get('MAIL_USERNAME')
 mail_password = os.environ.get('MAIL_PASSWORD')
 
+if not api_key:
+    logger.error("Weather API key not found in environment variables.")
 if not mail_username or not mail_password:
-    logger.error("Mail username or password not found in environment variables.")
+    logger.error("Mail credentials not found in environment variables.")
 
+# 配置郵件設置
+app.config['MAIL_SERVER'] = 'smtp.example.com'  # 改成你實際的 SMTP 服務器
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = mail_username
+app.config['MAIL_PASSWORD'] = mail_password
+
+mail = Mail(app)
+
+# 天氣數據函數
 def fetch_weather_data(city):
-    # 使用模塊級別的 api_key 變量，而不是每次函數內部都調用環境變量
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
-
     try:
         response = requests.get(url)
-        response.raise_for_status()  # 如果狀態碼不是 200，則拋出異常
+        response.raise_for_status()  # 檢查是否有錯誤的狀態碼
         data = response.json()
-        
-        # 檢查 APIß 返回的城市是否有效
+
+        # 檢查 API 返回的狀態碼是否為 200
         if data.get('cod') != 200:
+            logger.error(f"Failed to fetch weather for {city}: {data.get('message')}")
             return None
-        
-        # 將開爾文溫度轉換為攝氏度
-        temp_in_celsius = data['main']['temp']
-        
+
+        # 返回天氣數據
         return {
             'city': data['name'],
-            'temperature': round(temp_in_celsius, 2),  # 四捨五入到小數點兩位
+            'temperature': round(data['main']['temp'], 2),
             'description': data['weather'][0]['description']
         }
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching weather data: {e}")
+        logger.error(f"Error fetching weather data for {city}: {e}")
         return None
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    city = 'Los Angeles'  # 預設顯示洛杉磯的天氣
-    
-    if request.method == 'POST':
-        city = request.form.get('city') or 'Los Angeles'  # 當用戶未輸入城市時，使用預設值
+# 聯絡頁面處理路由，返回靜態頁面
+@app.route('/contact', methods=['GET'])
+def contact():
+    return render_template('contact.html')
+
+# 動態獲取天氣數據的 POST 路由
+@app.route('/get_weather', methods=['POST'])
+def get_weather():
+    try:
+        city = request.get_json().get('city')
+        if not city:
+            return jsonify({'error': 'City not provided'}), 400
+        
         weather_data = fetch_weather_data(city)
         
         if not weather_data:
-            weather_data = {
-                'city': city,
-                'temperature': "N/A",
-                'description': "Weather data unavailable."
-            }
-    
-    else:
-        # GET 請求時的預設天氣顯示
-        weather_data = fetch_weather_data(city)
-    
-    return render_template('index.html', weather=weather_data)
+            return jsonify({'error': f'Unable to fetch weather data for {city}'}), 400
+        
+        return jsonify({'weather': weather_data})
+    except Exception as e:
+        logger.error(f"Error in /get_weather: {e}")
+        return jsonify({'error': 'An error occurred while fetching weather data.'}), 500
 
-
+# 聯絡表單提交處理路由
 @app.route('/submit', methods=['POST'])
 def submit():
-    fullname = request.form['fullname']
-    email = request.form['email']
-    message = request.form['message']
-
-    # 創建郵件
-    msg = Message("New Form Submission",
-                  sender=app.config['MAIL_USERNAME'],
-                  recipients=["she050623@gmail.com"])  # 改成你的收件人 email
-    msg.body = f"Fullname: {fullname}\nEmail: {email}\nMessage: {message}"
-    mail.send(msg)
-
-    return "Form submitted successfully and email sent!"
-
-@app.route('/contact')
-def contact():
-    # 獲取天氣資訊
-    city = "Los Angeles"
-    weather_info = get_weather(city)
-    
-    # 獲取最新新聞
-    news_info = get_latest_news()
-
-    # 渲染 contact.html 模板，並將天氣與新聞資料傳遞過去
-    return render_template('contact.html', weather=weather_info, news=news_info)
-
-def get_weather(city):
-    api_key = os.environ.get('OPENWEATHER_API_KEY')  # 將 API 金鑰儲存在 .env 文件中
-    base_url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
-    response = requests.get(base_url)
-    data = response.json()
-    print(data)  # 打印天氣 API 響應數據
-    
-    if data["cod"] != 404:
-        main = data["main"]
-        weather_desc = data["weather"][0]["description"]
-        temperature = main["temp"]
-        return {
-            "city": city,
-            "temperature": f"{temperature}°C",
-            "description": weather_desc
-        }
-    else:
-        return {
-            "city": city,
-            "temperature": "N/A",
-            "description": "City not found."
-        }
-
-
-def get_latest_news():
-    logger.info("Fetching latest news...")
-    url = "https://news.google.com/rss"
-    
     try:
-        news_feed = feedparser.parse(url)
-        logger.debug(f"News feed parsed: {news_feed.feed.title}")
-        
-        articles = []
-        for entry in news_feed.entries[:5]:  # 只顯示前 5 篇新聞
-            articles.append({
-                "title": entry.title,
-                "link": entry.link
-            })
-            logger.debug(f"News Article: {entry.title}, Link: {entry.link}")
+        fullname = request.form['fullname']
+        email = request.form['email']
+        message = request.form['message']
 
-        logger.info("Successfully fetched and parsed latest news.")
-        return articles
+        # 創建郵件
+        msg = Message("New Form Submission",
+                      sender=app.config['MAIL_USERNAME'],
+                      recipients=["she050623@gmail.com"])  # 改成你的收件人 email
+        msg.body = f"Fullname: {fullname}\nEmail: {email}\nMessage: {message}"
+        mail.send(msg)
+        logger.info(f"Email sent successfully to she050623@gmail.com from {email}")
+
+        return "Form submitted successfully and email sent!"
     except Exception as e:
-        logger.error(f"Error fetching news: {e}")
-        return None
+        logger.error(f"Error sending email: {e}")
+        return "Failed to send email.", 500
 
-
+# 主程序
 if __name__ == '__main__':
     app.run(debug=True)
