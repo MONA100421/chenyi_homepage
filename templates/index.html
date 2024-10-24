@@ -1099,13 +1099,17 @@
         <!-- Latest News Section -->
         <section class="latest-news section-padding">
           <h3 class="h3">Latest News</h3>
-          <ul class="news-list">
-            {% for article in news %}
-              <li class="news-item">
-                <a href="{{ article.link }}" target="_blank" class="news-link">{{ article.title }}</a>
-              </li>
-            {% endfor %}
-          </ul>
+          {% if news %}
+            <ul class="news-list">
+              {% for article in news %}
+                <li class="news-item">
+                  <a href="{{ article.link }}" target="_blank" class="news-link">{{ article.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>Latest news is currently unavailable.</p>
+          {% endif %}
         </section>
         
         <!-- Map Section -->
