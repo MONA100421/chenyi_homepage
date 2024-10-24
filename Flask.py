@@ -20,9 +20,30 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 mail = Mail(app)
 
+def fetch_weather_data():
+    api_key = os.environ.get('OPENWEATHER_API_KEY')
+    city = 'Taipei'  # 這可以根據用戶輸入進行動態設置
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+    
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # 如果狀態碼不是 200，則拋出錯誤
+        data = response.json()
+        return {
+            'city': data['name'],
+            'temperature': data['main']['temp'],
+            'description': data['weather'][0]['description']
+        }
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching weather data: {e}")
+        return None
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    weather_data = fetch_weather_data()  # 確保返回的數據結構包含 city 信息
+    if not weather_data:
+        return "Error fetching weather data", 500
+    return render_template('index.html', weather=weather_data)
 
 @app.route('/submit', methods=['POST'])
 def submit():

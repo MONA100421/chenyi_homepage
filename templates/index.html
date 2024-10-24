@@ -1084,13 +1084,19 @@
           <h2 class="h2 article-title">Contact</h2>
         </header>
 
+        <!-- Weather Information Section -->
         <section class="weather-info section-padding">
           <h3 class="h3">Weather Information</h3>
-          <p><strong>City:</strong> {{ weather.city }}</p>
-          <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
-          <p><strong>Condition:</strong> {{ weather.description }}</p>
+          {% if weather %}
+            <p><strong>City:</strong> {{ weather.city }}</p>
+            <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+            <p><strong>Condition:</strong> {{ weather.description }}</p>
+          {% else %}
+            <p>Weather information is currently unavailable.</p>
+          {% endif %}
         </section>
         
+        <!-- Latest News Section -->
         <section class="latest-news section-padding">
           <h3 class="h3">Latest News</h3>
           <ul class="news-list">
@@ -1102,6 +1108,7 @@
           </ul>
         </section>
         
+        <!-- Map Section -->
         <section class="mapbox" data-mapbox>
           <figure>
             <iframe
@@ -1110,7 +1117,8 @@
           </figure>
         </section>
 
-        <section class="contact-form">
+         <!-- Contact Form Section -->
+         <section class="contact-form">
 
           <h3 class="h3 form-title">Contact Form</h3>
 
