@@ -1087,6 +1087,12 @@
         <!-- Weather Information Section -->
         <section class="weather-info section-padding">
           <h3 class="h3">Weather Information</h3>
+          <form action="/" method="POST" class="form" data-form>
+            <label for="city">Enter City:</label>
+            <input type="text" id="city" name="city" placeholder="Enter city" required>
+            <button type="submit">Get Weather</button>
+          </form>
+  
           {% if weather %}
             <p><strong>City:</strong> {{ weather.city }}</p>
             <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>

@@ -23,7 +23,7 @@ mail = Mail(app)
 def fetch_weather_data():
     api_key = os.environ.get('OPENWEATHER_API_KEY')
     city = 'Los Angeles'  # 這可以根據用戶輸入進行動態設置
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     
     try:
         response = requests.get(url)
@@ -38,9 +38,12 @@ def fetch_weather_data():
         print(f"Error fetching weather data: {e}")
         return None
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    weather_data = fetch_weather_data()  # 確保返回的數據結構包含 city 信息
+    city = 'Los Angeles'  # Default city
+    if request.method == 'POST':
+        city = request.form.get('city')  # Get city from the form
+    weather_data = fetch_weather_data(city)  # Pass city to the function
     if not weather_data:
         return "Error fetching weather data", 500
     return render_template('index.html', weather=weather_data)
