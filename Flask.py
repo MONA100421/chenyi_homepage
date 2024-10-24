@@ -3,8 +3,6 @@ from flask_mail import Mail, Message
 from flask_cors import CORS
 
 import os
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 app = Flask(__name__)
 CORS(app)
@@ -18,12 +16,16 @@ app.config['MAIL_PASSWORD'] = 'your-password'
 
 mail = Mail(app)
 
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    
     fullname = request.form['fullname']
     email = request.form['email']
     message = request.form['message']
