@@ -1229,22 +1229,25 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .weather-info, .latest-news {
   background-color: var(--jet); /* 深色背景與頁面整體一致 */
-  padding: 20px;
+  padding: 25px; /* 增加內邊距，使內容更突出 */
   border-radius: 16px;
-  margin-bottom: 25px; /* 與表單間距一致 */
-  border: 1px solid var(--jet); /* 與其他區塊的邊框一致 */
+  margin-bottom: 30px; /* 與其他區塊保持更大間距 */
+  border: 1px solid var(--bg-gradient-yellow-1); /* 使邊框更有區分感 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 增加陰影效果 */
 }
 
 .weather-info h3, .latest-news h3 {
   color: var(--orange-yellow-crayola); /* 符合標題的顏色 */
   font-size: var(--fs-5);
-  margin-bottom: 15px;
+  margin-bottom: 20px; /* 使標題和內容間距稍大 */
+  font-weight: bold; /* 突出標題 */
+  text-transform: uppercase; /* 全部字母大寫，增加強調 */
 }
 
 .weather-info p, .latest-news ul {
   color: var(--white-2); /* 白色字體，與其他文字一致 */
   font-size: var(--fs-6);
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* 增加段落之間的間距 */
 }
 
 .latest-news ul {
@@ -1253,19 +1256,38 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 .latest-news li {
-  margin-bottom: 10px;
+  margin-bottom: 12px; /* 調整新聞列表間距 */
 }
 
 .latest-news a {
   color: var(--orange-yellow-crayola); /* link顏色與按鈕一致 */
   text-decoration: none;
-  transition: color var(--transition-1);
+  font-weight: 500; /* 提高字體粗細，使鏈接更突出 */
+  transition: color 0.3s ease; /* 增加平滑的過渡效果 */
 }
 
 .latest-news a:hover {
   color: var(--bg-gradient-yellow-1); /* 鼠標懸停時變亮 */
 }
 
+.weather-info p {
+  line-height: 1.6; /* 調整段落行距，增加可讀性 */
+}
+
+/* 天氣區塊的溫度強調樣式 */
+.weather-info .temperature-info {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* 增加天氣條件的圖標樣式 */
+.weather-info .condition-icon {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
 
 /*-----------------------------------*\
   #RESPONSIVE
