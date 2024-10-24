@@ -1156,12 +1156,20 @@
           <h2 class="h2 article-title">Contact</h2>
         </header>
 
-        <section class="additional-info">
-          <h3 class="h3 form-title">Weather Information</h3>
-          <p>{{ weather }}</p>  <!-- 這裡會顯示 Flask 傳遞的天氣資料 -->
-      
-          <h3 class="h3 form-title">Latest News</h3>
-          <p>{{ news }}</p>  <!-- 這裡會顯示 Flask 傳遞的最新新聞 -->
+        <section class="weather-info">
+          <h3>Weather Information</h3>
+          <p>City: {{ weather.city }}</p>
+          <p>Temperature: {{ weather.temperature }}</p>
+          <p>Condition: {{ weather.description }}</p>
+        </section>
+        
+        <section class="latest-news">
+          <h3>Latest News</h3>
+          <ul>
+            {% for article in news %}
+              <li><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></li>
+            {% endfor %}
+          </ul>
         </section>
         
         <section class="mapbox" data-mapbox>

@@ -29,8 +29,8 @@ def submit():
 
     # 創建郵件
     msg = Message("New Form Submission",
-                  sender="your-email@example.com",
-                  recipients=["recipient-email@example.com"])
+                  sender=app.config['MAIL_USERNAME'],
+                  recipients=["she050623@gmail.com"])  # 改成你的收件人 email
     msg.body = f"Fullname: {fullname}\nEmail: {email}\nMessage: {message}"
     mail.send(msg)
 
@@ -45,6 +45,7 @@ def contact():
     # 獲取最新新聞
     news_info = get_latest_news()
 
+    # 渲染 contact.html 模板，並將天氣與新聞資料傳遞過去
     return render_template('contact.html', weather=weather_info, news=news_info)
 
 def get_weather(city):
@@ -57,9 +58,17 @@ def get_weather(city):
         main = data["main"]
         weather_desc = data["weather"][0]["description"]
         temperature = main["temp"]
-        return f"City: {city}\nTemperature: {temperature}°C\nWeather: {weather_desc}"
+        return {
+            "city": city,
+            "temperature": f"{temperature}°C",
+            "description": weather_desc
+        }
     else:
-        return "City not found."
+        return {
+            "city": city,
+            "temperature": "N/A",
+            "description": "City not found."
+        }
 
 def get_latest_news():
     url = "https://news.google.com/rss"
@@ -67,11 +76,12 @@ def get_latest_news():
 
     articles = []
     for entry in news_feed.entries[:5]:  # 只顯示前 5 篇新聞
-        title = entry.title
-        link = entry.link
-        articles.append(f"{title}\nRead more: {link}\n")
+        articles.append({
+            "title": entry.title,
+            "link": entry.link
+        })
 
-    return "\n".join(articles)
+    return articles
 
 if __name__ == '__main__':
     app.run(debug=True)
