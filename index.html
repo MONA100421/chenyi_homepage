@@ -1156,18 +1156,20 @@
           <h2 class="h2 article-title">Contact</h2>
         </header>
 
-        <section class="weather-info">
-          <h3>Weather Information</h3>
-          <p>City: {{ weather.city }}</p>
-          <p>Temperature: {{ weather.temperature }}</p>
-          <p>Condition: {{ weather.description }}</p>
+        <section class="weather-info section-padding">
+          <h3 class="h3">Weather Information</h3>
+          <p><strong>City:</strong> {{ weather.city }}</p>
+          <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+          <p><strong>Condition:</strong> {{ weather.description }}</p>
         </section>
         
-        <section class="latest-news">
-          <h3>Latest News</h3>
-          <ul>
+        <section class="latest-news section-padding">
+          <h3 class="h3">Latest News</h3>
+          <ul class="news-list">
             {% for article in news %}
-              <li><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></li>
+              <li class="news-item">
+                <a href="{{ article.link }}" target="_blank" class="news-link">{{ article.title }}</a>
+              </li>
             {% endfor %}
           </ul>
         </section>

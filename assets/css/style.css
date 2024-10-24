@@ -1223,7 +1223,48 @@ textarea.form-input::-webkit-resizer { display: none; }
 .form-btn:disabled:hover::before { background: var(--bg-gradient-jet); }
 
 
+/*-----------------------------------*\
+  #WEATHER AND NEWS STYLING
+\*-----------------------------------*/
 
+.weather-info, .latest-news {
+  background-color: var(--jet); /* 深色背景與頁面整體一致 */
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 25px; /* 與表單間距一致 */
+  border: 1px solid var(--jet); /* 與其他區塊的邊框一致 */
+}
+
+.weather-info h3, .latest-news h3 {
+  color: var(--orange-yellow-crayola); /* 符合標題的顏色 */
+  font-size: var(--fs-5);
+  margin-bottom: 15px;
+}
+
+.weather-info p, .latest-news ul {
+  color: var(--white-2); /* 白色字體，與其他文字一致 */
+  font-size: var(--fs-6);
+  margin-bottom: 10px;
+}
+
+.latest-news ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.latest-news li {
+  margin-bottom: 10px;
+}
+
+.latest-news a {
+  color: var(--orange-yellow-crayola); /* link顏色與按鈕一致 */
+  text-decoration: none;
+  transition: color var(--transition-1);
+}
+
+.latest-news a:hover {
+  color: var(--bg-gradient-yellow-1); /* 鼠標懸停時變亮 */
+}
 
 
 /*-----------------------------------*\
