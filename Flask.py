@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import requests
 import feedparser
 import os
+import logging
 
 load_dotenv()  # 加載 .env 文件
 
@@ -47,21 +48,25 @@ def fetch_weather_data(city):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    city = 'Los Angeles'  # Default city
+    city = 'Los Angeles'  # 預設顯示洛杉磯的天氣
     
     if request.method == 'POST':
-        city = request.form.get('city')
+        city = request.form.get('city') or 'Los Angeles'  # 當用戶未輸入城市時，使用預設值
+        weather_data = fetch_weather_data(city)
+        
+        if not weather_data:
+            weather_data = {
+                'city': city,
+                'temperature': "N/A",
+                'description': "Weather data unavailable."
+            }
     
-    weather_data = fetch_weather_data(city)
-
-    if not weather_data:
-        weather_data = {
-            'city': city,
-            'temperature': "N/A",
-            'description': "Weather data unavailable."
-        }
+    else:
+        # GET 請求時的預設天氣顯示
+        weather_data = fetch_weather_data(city)
     
     return render_template('index.html', weather=weather_data)
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -115,17 +120,27 @@ def get_weather(city):
 
 
 def get_latest_news():
+    logger.info("Fetching latest news...")
     url = "https://news.google.com/rss"
-    news_feed = feedparser.parse(url)
+    
+    try:
+        news_feed = feedparser.parse(url)
+        logger.debug(f"News feed parsed: {news_feed.feed.title}")
+        
+        articles = []
+        for entry in news_feed.entries[:5]:  # 只顯示前 5 篇新聞
+            articles.append({
+                "title": entry.title,
+                "link": entry.link
+            })
+            logger.debug(f"News Article: {entry.title}, Link: {entry.link}")
 
-    articles = []
-    for entry in news_feed.entries[:5]:  # 只顯示前 5 篇新聞
-        articles.append({
-            "title": entry.title,
-            "link": entry.link
-        })
+        logger.info("Successfully fetched and parsed latest news.")
+        return articles
+    except Exception as e:
+        logger.error(f"Error fetching news: {e}")
+        return None
 
-    return articles
 
 if __name__ == '__main__':
     app.run(debug=True)
