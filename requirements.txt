@@ -104,6 +104,7 @@ filelock @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/filel
 fiona @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_3fgvqalgly/croot/fiona_1704920730473/work
 flake8 @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_8fyuzhayos/croot/flake8_1708965272166/work
 Flask @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b6zka5i2cn/croot/flask_1716545886197/work
+Flask-Cors==5.0.0
 Flask-Mail==0.10.0
 Flask-SQLAlchemy==3.1.1
 folium @ file:///home/conda/feedstock_root/build_artifacts/folium_1718605969954/work
