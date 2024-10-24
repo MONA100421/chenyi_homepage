@@ -157,3 +157,42 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector('form[data-form]');
+  const cityInput = document.getElementById('city');
+  const weatherInfo = document.querySelector('.weather-info');
+
+  form.addEventListener('submit', function (event) {
+      event.preventDefault(); // 阻止表單的默認提交行為
+      const city = cityInput.value;
+
+      // 使用 Fetch 發送表單數據
+      fetch('/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',  // 設置為表單格式
+          },
+          body: new URLSearchParams({
+              'city': city  // 使用 URLSearchParams 傳遞數據
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.weather) {
+              // 更新天氣資訊到頁面
+              weatherInfo.innerHTML = `
+                <p><strong>City:</strong> ${data.weather.city}</p>
+                <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
+                <p><strong>Condition:</strong> ${data.weather.description}</p>
+              `;
+          } else {
+              weatherInfo.innerHTML = `<p>Weather information is currently unavailable.</p>`;
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
+      });
+  });
+});

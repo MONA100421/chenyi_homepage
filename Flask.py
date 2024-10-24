@@ -47,19 +47,20 @@ def fetch_weather_data(city):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    city = 'Los Angeles'  # 預設顯示洛杉磯的天氣
-
+    # 如果是 POST 請求，則根據用戶輸入的城市名更新
     if request.method == 'POST':
-        data = request.get_json()  # 使用 request.get_json() 來處理 JSON 請求
-        city = data.get('city', 'Los Angeles')  # 根據用戶輸入更新城市名
-
-    # 獲取天氣資料
-    weather_data = fetch_weather_data(city)
+        city = request.json.get('city')  # 根據用戶表單輸入更新城市名
     
-    if not weather_data:
-        return jsonify({"error": "Error fetching weather data"}), 500  # 返回 JSON 格式的錯誤訊息
-
-    return jsonify({"weather": weather_data})
+        # 獲取天氣資料
+        weather_data = fetch_weather_data(city)
+    
+        if not weather_data:
+            return jsonify({"error": "City not found"}), 404  # 返回錯誤訊息
+    
+        return jsonify({"weather": weather_data})  # 返回 JSON 格式的天氣資料
+    # 預設顯示洛杉磯的天氣
+    weather_data = fetch_weather_data('Los Angeles')
+    return render_template('index.html', weather=weather_data)
 
 @app.route('/submit', methods=['POST'])
 def submit():
