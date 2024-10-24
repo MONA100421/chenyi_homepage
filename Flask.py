@@ -16,22 +16,17 @@ load_dotenv()  # 確保 .env 文件中的 API 金鑰等被加載
 app = Flask(__name__, static_folder='assets')
 CORS(app)  # 允許跨域請求
 
-# 獲取 API 金鑰和郵件設置
+# 一次性讀取 API 金鑰
 api_key = os.environ.get('OPENWEATHER_API_KEY')
-mail_username = os.environ.get('MAIL_USERNAME')
-mail_password = os.environ.get('MAIL_PASSWORD')
-
 if not api_key:
-    logger.error("Weather API key not found in environment variables.")
-if not mail_username or not mail_password:
-    logger.error("Mail credentials not found in environment variables.")
+    logger.error("API key not found in environment variables.")
 
 # 配置郵件設置
-app.config['MAIL_SERVER'] = 'smtp.example.com'  # 改成你實際的 SMTP 服務器
+app.config['MAIL_SERVER'] = 'smtp.example.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = mail_username
-app.config['MAIL_PASSWORD'] = mail_password
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 mail = Mail(app)
 
@@ -45,7 +40,6 @@ def fetch_weather_data(city):
 
         # 檢查 API 返回的狀態碼是否為 200
         if data.get('cod') != 200:
-            logger.error(f"Failed to fetch weather for {city}: {data.get('message')}")
             return None
 
         # 返回天氣數據
@@ -55,15 +49,17 @@ def fetch_weather_data(city):
             'description': data['weather'][0]['description']
         }
     except requests.exceptions.RequestException as e:
-        logger.error(f"Error fetching weather data for {city}: {e}")
+        logger.error(f"Error fetching weather data: {e}")
         return None
 
-# 聯絡頁面處理路由，返回靜態頁面
-@app.route('/contact', methods=['GET'])
-def contact():
-    return render_template('contact.html')
+# 網站首頁處理路由
+@app.route('/', methods=['GET'])
+def home():
+    city = 'Los Angeles'  # 預設顯示洛杉磯的天氣
+    weather_data = fetch_weather_data(city)
+    return render_template('index.html', weather=weather_data)
 
-# 動態獲取天氣數據的 POST 路由
+# 用於獲取天氣數據的 POST 路由
 @app.route('/get_weather', methods=['POST'])
 def get_weather():
     try:
@@ -84,23 +80,27 @@ def get_weather():
 # 聯絡表單提交處理路由
 @app.route('/submit', methods=['POST'])
 def submit():
-    try:
-        fullname = request.form['fullname']
-        email = request.form['email']
-        message = request.form['message']
+    fullname = request.form['fullname']
+    email = request.form['email']
+    message = request.form['message']
 
-        # 創建郵件
-        msg = Message("New Form Submission",
-                      sender=app.config['MAIL_USERNAME'],
-                      recipients=["she050623@gmail.com"])  # 改成你的收件人 email
-        msg.body = f"Fullname: {fullname}\nEmail: {email}\nMessage: {message}"
-        mail.send(msg)
-        logger.info(f"Email sent successfully to she050623@gmail.com from {email}")
+    # 創建郵件
+    msg = Message("New Form Submission",
+                  sender=app.config['MAIL_USERNAME'],
+                  recipients=["she050623@gmail.com"])  # 改成你的收件人 email
+    msg.body = f"Fullname: {fullname}\nEmail: {email}\nMessage: {message}"
+    mail.send(msg)
 
-        return "Form submitted successfully and email sent!"
-    except Exception as e:
-        logger.error(f"Error sending email: {e}")
-        return "Failed to send email.", 500
+    return "Form submitted successfully and email sent!"
+
+# 聯絡頁面處理路由
+@app.route('/contact')
+def contact():
+    city = "Los Angeles"
+    weather_info = fetch_weather_data(city)
+
+    # 渲染 contact.html 模板
+    return render_template('contact.html', weather=weather_info)
 
 # 主程序
 if __name__ == '__main__':
