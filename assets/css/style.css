@@ -1684,29 +1684,6 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 
-/* 讓輸入框和按鈕風格與整體風格一致 */
-input[type="text"], button {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-button {
-  background-color: #ff9900;
-  color: #fff;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #ff7700;
-}
-
-
 /**
  * responsive larger than 1024px screen
  */
