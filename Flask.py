@@ -15,6 +15,7 @@ load_dotenv()  # 加載 .env 文件
 app = Flask(__name__, static_folder='assets')
 CORS(app)
 
+# 一次性讀取 API 金鑰
 api_key = os.environ.get('OPENWEATHER_API_KEY')
 if not api_key:
     logger.error("API key not found in environment variables.")
@@ -27,9 +28,14 @@ app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 mail = Mail(app)
+mail_username = os.environ.get('MAIL_USERNAME')
+mail_password = os.environ.get('MAIL_PASSWORD')
+
+if not mail_username or not mail_password:
+    logger.error("Mail username or password not found in environment variables.")
 
 def fetch_weather_data(city):
-    api_key = os.environ.get('OPENWEATHER_API_KEY')
+    # 使用模塊級別的 api_key 變量，而不是每次函數內部都調用環境變量
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
 
     try:
@@ -109,7 +115,7 @@ def get_weather(city):
     data = response.json()
     print(data)  # 打印天氣 API 響應數據
     
-    if data["cod"] != "404":
+    if data["cod"] != 404:
         main = data["main"]
         weather_desc = data["weather"][0]["description"]
         temperature = main["temp"]

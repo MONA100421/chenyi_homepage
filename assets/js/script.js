@@ -159,32 +159,34 @@ for (let i = 0; i < navigationLinks.length; i++) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector('form[data-form]');
-  const cityInput = document.getElementById('city');
-  const weatherInfo = document.querySelector('.weather-info');
+  // 頁面加載時，預設獲取洛杉磯天氣
+  const defaultCity = 'Los Angeles';
+  fetchWeather(defaultCity);
 
-  form.addEventListener('submit', function (event) {
-      event.preventDefault(); // 阻止表單的默認提交行為
-      const city = cityInput.value;
+  // 在這裡處理回車事件
+  cityInput.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+          event.preventDefault();
+          const city = cityInput.value;
+          fetchWeather(city);
+      }
+  });
 
-      // 使用 Fetch 發送表單數據
+  function fetchWeather(city) {
       fetch('/', {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',  // 設置為表單格式
+              'Content-Type': 'application/json',
           },
-          body: new URLSearchParams({
-              'city': city  // 使用 URLSearchParams 傳遞數據
-          })
+          body: JSON.stringify({ city: city }),
       })
       .then(response => response.json())
       .then(data => {
           if (data.weather) {
-              // 更新天氣資訊到頁面
               weatherInfo.innerHTML = `
-                <p><strong>City:</strong> ${data.weather.city}</p>
-                <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
-                <p><strong>Condition:</strong> ${data.weather.description}</p>
+                  <p><strong>City:</strong> ${data.weather.city}</p>
+                  <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
+                  <p><strong>Condition:</strong> ${data.weather.description}</p>
               `;
           } else {
               weatherInfo.innerHTML = `<p>Weather information is currently unavailable.</p>`;
@@ -194,5 +196,5 @@ document.addEventListener("DOMContentLoaded", function () {
           console.error('Error:', error);
           weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
       });
-  });
+  }
 });
