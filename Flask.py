@@ -7,10 +7,17 @@ import feedparser
 import os
 import logging
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 load_dotenv()  # 加載 .env 文件
 
 app = Flask(__name__, static_folder='assets')
 CORS(app)
+
+api_key = os.environ.get('OPENWEATHER_API_KEY')
+if not api_key:
+    logger.error("API key not found in environment variables.")
 
 # 配置郵件設置
 app.config['MAIL_SERVER'] = 'smtp.example.com'
