@@ -46,10 +46,10 @@ def index():
     city = 'Los Angeles'  # 預設城市
 
     if request.method == 'POST':
-        city = request.form['city']  # 根據用戶表單輸入更新城市名
-
-    weather_data = fetch_weather_data(city)
-
+        city = request.form.get('city')  # 根據用戶表單輸入更新城市名
+        if city:
+                weather_data = fetch_weather_data(city)
+                
     if not weather_data:
         return "Error fetching weather data", 500
 
