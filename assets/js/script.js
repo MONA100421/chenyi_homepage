@@ -159,37 +159,48 @@ for (let i = 0; i < navigationLinks.length; i++) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // 頁面加載時，預設獲取洛杉磯天氣
+  // Select the input field and weather info container
+  const cityInput = document.getElementById('city');  // Ensure this is the correct ID
+  const weatherInfo = document.querySelector('.weather-info');  // Ensure this matches your HTML
+
+  // Fetch the default city weather on page load (Los Angeles)
   const defaultCity = 'Los Angeles';
   fetchWeather(defaultCity);
 
-  // 在這裡處理回車事件
+  // Handle the "Enter" keypress event to fetch weather for the entered city
   cityInput.addEventListener('keypress', function (event) {
       if (event.key === 'Enter') {
-          event.preventDefault();
-          const city = cityInput.value;
-          fetchWeather(city);
+          event.preventDefault();  // Prevent the default form submission
+          const city = cityInput.value.trim();  // Get the entered city and remove any extra spaces
+          
+          if (city) {
+              fetchWeather(city);  // Call the fetchWeather function with the entered city
+          } else {
+              weatherInfo.innerHTML = `<p>Please enter a city name.</p>`;
+          }
       }
   });
 
+  // Function to fetch weather information for a given city
   function fetchWeather(city) {
       fetch('/', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ city: city }),
+          body: JSON.stringify({ city: city }),  // Send city data to the backend
       })
       .then(response => response.json())
       .then(data => {
           if (data.weather) {
+              // Update the weather info on the page
               weatherInfo.innerHTML = `
                   <p><strong>City:</strong> ${data.weather.city}</p>
                   <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
                   <p><strong>Condition:</strong> ${data.weather.description}</p>
               `;
           } else {
-              weatherInfo.innerHTML = `<p>Weather information is currently unavailable.</p>`;
+              weatherInfo.innerHTML = `<p>Weather information is currently unavailable for "${city}".</p>`;
           }
       })
       .catch(error => {
@@ -198,3 +209,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 });
+
