@@ -165,66 +165,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 處理回車鍵按下事件
   cityInput.addEventListener('keypress', function (event) {
-      if (event.key === 'Enter') {
-          event.preventDefault(); // 阻止表單的默認提交行為
-          const city = cityInput.value;
+    if (event.key === 'Enter') {
+      event.preventDefault();  // 阻止表單的默認提交行為
+      const city = cityInput.value.trim(); // 確保城市名稱沒有多餘空格
 
-          // 發送 AJAX 請求到 /contact 而不是 /
-          fetch('/contact', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ city: city }), // 將用戶輸入的城市發送給後端
-          })
-          .then(response => response.json())
-          .then(data => {
-              if (data.weather) {
-                  // 更新天氣資訊到頁面
-                  weatherInfo.innerHTML = `
-                      <p><strong>City:</strong> ${data.weather.city}</p>
-                      <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
-                      <p><strong>Condition:</strong> ${data.weather.description}</p>
-                  `;
-              } else {
-                  weatherInfo.innerHTML = `<p>Weather information is currently unavailable.</p>`;
-              }
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
-          });
+      if (city) {
+        // 發送 AJAX 請求到 /get_weather 而不是 /contact
+        fetchWeather(city);  // 使用下面定義的 fetchWeather 函數
+      } else {
+        weatherInfo.innerHTML = `<p>Please enter a city name.</p>`;
       }
+    }
   });
-});
 
-
-// Function to fetch weather information for a given city
-function fetchWeather(city) {
-  fetch('/', {
+  // Function to fetch weather information for a given city
+  function fetchWeather(city) {
+    fetch('/get_weather', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ city: city }),  // Send city data to the backend
-  })
-  .then(response => response.json())
-  .then(data => {
+      body: JSON.stringify({ city: city }),  // 將用戶輸入的城市發送給後端
+    })
+    .then(response => response.json())
+    .then(data => {
       if (data.weather) {
-          // Update the weather info on the page
-          weatherInfo.innerHTML = `
-              <p><strong>City:</strong> ${data.weather.city}</p>
-              <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
-              <p><strong>Condition:</strong> ${data.weather.description}</p>
-          `;
-      } else {
-          weatherInfo.innerHTML = `<p>Weather information is currently unavailable for "${city}".</p>`;
+        // 更新天氣資訊到頁面
+        weatherInfo.innerHTML = `
+          <p><strong>City:</strong> ${data.weather.city}</p>
+          <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
+          <p><strong>Condition:</strong> ${data.weather.description}</p>
+        `;
+      } else if (data.error) {
+        weatherInfo.innerHTML = `<p>${data.error}</p>`;
       }
-  })
-  .catch(error => {
+    })
+    .catch(error => {
       console.error('Error:', error);
       weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
-  });
-}
+    });
+  }
+});
+
 
 
