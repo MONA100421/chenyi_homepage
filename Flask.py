@@ -20,14 +20,13 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 mail = Mail(app)
 
-def fetch_weather_data():
+def fetch_weather_data(city):
     api_key = os.environ.get('OPENWEATHER_API_KEY')
-    city = 'Los Angeles'  # 這可以根據用戶輸入進行動態設置
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
-    
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+
     try:
         response = requests.get(url)
-        response.raise_for_status()  # 如果狀態碼不是 200，則拋出錯誤
+        response.raise_for_status()  # 如果狀態碼不是 200，則拋出異常
         data = response.json()
         return {
             'city': data['name'],
@@ -40,13 +39,13 @@ def fetch_weather_data():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    city = 'Los Angeles'  # 預設城市
+
     if request.method == 'POST':
-        city = request.form['city']  # 從用戶表單接收城市名
-    else:
-        city = 'Los Angeles'  # 如果沒有輸入，則默認使用 Los Angeles
+        city = request.form['city']  # 根據用戶表單輸入更新城市名
 
     weather_data = fetch_weather_data(city)
-    
+
     if not weather_data:
         return "Error fetching weather data", 500
 
