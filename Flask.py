@@ -56,6 +56,7 @@ def get_weather(city):
     base_url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
     response = requests.get(base_url)
     data = response.json()
+    print(data)  # 打印天氣 API 響應數據
     
     if data["cod"] != "404":
         main = data["main"]
