@@ -1090,7 +1090,6 @@
           <form action="/" method="POST" class="form" data-form>
             <label for="city">Enter City:</label>
             <input type="text" id="city" name="city" placeholder="Enter city" required>
-            <button type="submit">Get Weather</button>
           </form>
         <div id="weather-result">
           {% if weather %}
@@ -1159,9 +1158,10 @@
       const cityInput = document.getElementById('city');
       const weatherInfo = document.querySelector('.weather-info');
   
-      form.addEventListener('submit', function (event) {
-        event.preventDefault(); // 阻止表單的默認提交行為
-        const city = cityInput.value;
+      cityInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+          event.preventDefault(); // 阻止表單的默認提交行為
+          const city = cityInput.value;
   
         // 發送 AJAX 請求
         fetch('/', {

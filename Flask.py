@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_mail import Mail, Message
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -29,6 +29,10 @@ def fetch_weather_data(city):
         response.raise_for_status()  # 如果狀態碼不是 200，則拋出異常
         data = response.json()
         
+        # 檢查 API 返回的城市是否有效
+        if data.get('cod') != 200:
+            return None
+        
         # 將開爾文溫度轉換為攝氏度
         temp_in_celsius = data['main']['temp'] - 273.15
         
@@ -43,18 +47,19 @@ def fetch_weather_data(city):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    city = 'Los Angeles'  # 預設顯示洛杉磯的天氣
-    
     # 如果是 POST 請求，則根據用戶輸入的城市名更新
     if request.method == 'POST':
-        city = request.form.get('city')  # 根據用戶表單輸入更新城市名
+        city = request.json.get('city')  # 根據用戶表單輸入更新城市名
     
-    # 獲取天氣資料
-    weather_data = fetch_weather_data(city)
+        # 獲取天氣資料
+        weather_data = fetch_weather_data(city)
     
-    if not weather_data:
-        return "Error fetching weather data", 500  # 若資料有問題，返回錯誤訊息
+        if not weather_data:
+            return jsonify({"error": "City not found"}), 404  # 返回錯誤訊息
     
+        return jsonify({"weather": weather_data})  # 返回 JSON 格式的天氣資料
+    # 預設顯示洛杉磯的天氣
+    weather_data = fetch_weather_data('Los Angeles')
     return render_template('index.html', weather=weather_data)
 
 @app.route('/submit', methods=['POST'])
