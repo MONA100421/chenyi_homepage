@@ -8,7 +8,7 @@ import os
 
 load_dotenv()  # 加載 .env 文件
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='assets')
 CORS(app)
 
 # 配置郵件設置
