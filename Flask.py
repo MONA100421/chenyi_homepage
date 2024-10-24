@@ -2,6 +2,10 @@ from flask import Flask, render_template, request
 from flask_mail import Mail, Message
 from flask_cors import CORS
 
+import os
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
 app = Flask(__name__)
 CORS(app)
 
