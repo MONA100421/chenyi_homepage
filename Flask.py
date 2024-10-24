@@ -22,7 +22,7 @@ mail = Mail(app)
 
 def fetch_weather_data():
     api_key = os.environ.get('OPENWEATHER_API_KEY')
-    city = 'Taipei'  # 這可以根據用戶輸入進行動態設置
+    city = 'Los Angeles'  # 這可以根據用戶輸入進行動態設置
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
     
     try:
