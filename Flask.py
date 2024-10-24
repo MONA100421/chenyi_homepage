@@ -40,12 +40,16 @@ def fetch_weather_data():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    city = 'Los Angeles'  # Default city
     if request.method == 'POST':
-        city = request.form.get('city')  # Get city from the form
-    weather_data = fetch_weather_data(city)  # Pass city to the function
+        city = request.form['city']  # 從用戶表單接收城市名
+    else:
+        city = 'Los Angeles'  # 如果沒有輸入，則默認使用 Los Angeles
+
+    weather_data = fetch_weather_data(city)
+    
     if not weather_data:
         return "Error fetching weather data", 500
+
     return render_template('index.html', weather=weather_data)
 
 @app.route('/submit', methods=['POST'])
