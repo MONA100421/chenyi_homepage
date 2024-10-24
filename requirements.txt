@@ -4,3 +4,6 @@ Flask==2.2.2
 gunicorn
 Flask-Mail
 Flask-Cors
+python-dotenv
+requests
+feedpaser
