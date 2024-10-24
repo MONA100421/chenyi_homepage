@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request
 from flask_mail import Mail, Message
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # 配置郵件設置
 app.config['MAIL_SERVER'] = 'smtp.example.com'
