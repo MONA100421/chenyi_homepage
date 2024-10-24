@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request
 from flask_mail import Mail, Message
 from flask_cors import CORS
+from dotenv import load_dotenv
 import requests
 import feedparser
 import os
+
+load_dotenv()  # 加載 .env 文件
 
 app = Flask(__name__)
 CORS(app)
@@ -49,7 +52,7 @@ def contact():
     return render_template('contact.html', weather=weather_info, news=news_info)
 
 def get_weather(city):
-    api_key = '51b40e906ccaf0b4db4ba1ad7638e185'  # OpenWeather API Key
+    api_key = os.environ.get('OPENWEATHER_API_KEY')  # 將 API 金鑰儲存在 .env 文件中
     base_url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
     response = requests.get(base_url)
     data = response.json()
@@ -69,6 +72,7 @@ def get_weather(city):
             "temperature": "N/A",
             "description": "City not found."
         }
+
 
 def get_latest_news():
     url = "https://news.google.com/rss"
