@@ -189,6 +189,14 @@
           </li>
 
           <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Weather</button>
+          </li>
+          
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>News</button>
+          </li>
+          
+          <li class="navbar-item">
             <button class="navbar-link" data-nav-link>Contact</button>
           </li>
 
@@ -1154,6 +1162,14 @@
           <h2 class="h2 article-title">Contact</h2>
         </header>
 
+        <section class="additional-info">
+          <h3 class="h3 form-title">Weather Information</h3>
+          <p>{{ weather }}</p>  <!-- 這裡會顯示 Flask 傳遞的天氣資料 -->
+      
+          <h3 class="h3 form-title">Latest News</h3>
+          <p>{{ news }}</p>  <!-- 這裡會顯示 Flask 傳遞的最新新聞 -->
+        </section>
+        
         <section class="mapbox" data-mapbox>
           <figure>
             <iframe
