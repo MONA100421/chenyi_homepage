@@ -1338,7 +1338,18 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 /* 響應式設計 */
-@media (max-width: 768px) {
+@media (max-width: 768px) {/* 768 */
+  /* Sidebar 高度縮小至 100px */
+  .sidebar {
+    max-height: 100px; /* 設定縮小的高度 */
+    margin-bottom: 15px; /* 確保在縮小時有足夠的邊距 */
+  }
+
+  /* 當 Sidebar 展開時，高度增加 */
+  .sidebar.active {
+    max-height: 250px; /* 展開後的高度 */
+  }
+  
   .weather-news-container {
     flex-direction: column; /* 在小螢幕上，兩個區塊將堆疊顯示 */
   }
@@ -1346,16 +1357,6 @@ textarea.form-input::-webkit-resizer { display: none; }
   .weather-box, .news-box {
     padding: 20px;
     border-radius: 10px;
-  }
-
-  /* Sidebar 在768px以下的螢幕上 */
-  .sidebar {
-    max-height: 100px; /* 設定縮小的高度 */
-    transition: var(--transition-2);
-  }
-
-  .sidebar.active {
-    max-height: 250px; /* 展開時的高度 */
   }
 }
 
@@ -1374,14 +1375,24 @@ textarea.form-input::-webkit-resizer { display: none; }
   /**
    * client
    */
+
   .clients-item { min-width: calc(33.33% - 10px); }
 
-  /* Sidebar 在450px以上的螢幕上 */
+
   .sidebar {
     max-height: 150px; /* 設定縮小的高度 */
     margin-bottom: 20px;
   }
+  /**
+   * #PORTFOLIO, BLOG 
+   */
+
+  .project-img,
+  .vlog-banner-box { height: auto; }
+
 }
+
+
 
 
 
@@ -1394,10 +1405,13 @@ textarea.form-input::-webkit-resizer { display: none; }
   /**
    * CUSTOM PROPERTY
    */
+
   :root {
+
     /**
      * typography
      */
+
     --fs-1: 32px;
     --fs-2: 24px;
     --fs-3: 26px;
@@ -1405,11 +1419,15 @@ textarea.form-input::-webkit-resizer { display: none; }
     --fs-6: 15px;
     --fs-7: 15px;
     --fs-8: 12px;
+
   }
+
+
 
   /**
    * #REUSED STYLE
    */
+
   .sidebar, article {
     width: 520px;
     margin-inline: auto;
@@ -1433,45 +1451,39 @@ textarea.form-input::-webkit-resizer { display: none; }
     font-size: 18px;
   }
 
+
+
   /**
    * #MAIN
    */
+
   main {
     margin-top: 60px;
     margin-bottom: 100px;
   }
 
+
+
   /**
    * #SIDEBAR
    */
+
   .sidebar {
     max-height: 225px;
     margin-bottom: 30px;
   }
 
-  .sidebar.active { 
-    max-height: 584px; 
-  }
+  .sidebar.active { max-height: 584px; }
 
-  .sidebar-info { 
-    gap: 25px; 
-  }
+  .sidebar-info { gap: 25px; }
 
-  .avatar-box { 
-    border-radius: 30px; 
-  }
+  .avatar-box { border-radius: 30px; }
 
-  .avatar-box img { 
-    width: 120px; 
-  }
+  .avatar-box img { width: 120px; }
 
-  .info-content .name { 
-    margin-bottom: 15px; 
-  }
+  .info-content .name { margin-bottom: 15px; }
 
-  .info-content .title { 
-    padding: 5px 18px; 
-  }
+  .info-content .title { padding: 5px 18px; }
 
   .info_more-btn {
     top: -30px;
@@ -1484,23 +1496,16 @@ textarea.form-input::-webkit-resizer { display: none; }
     font-size: var(--fs-8);
   }
 
-  .info_more-btn ion-icon { 
-    display: none; 
-  }
+  .info_more-btn ion-icon { display: none; }
 
-  .separator { 
-    margin: 32px 0; 
-  }
+  .separator { margin: 32px 0; }
 
-  .contacts-list { 
-    gap: 20px; 
-  }
+  .contacts-list { gap: 20px; }
 
   .contact-info {
     max-width: calc(100% - 64px);
     width: calc(100% - 64px);
   }
-}
 
 
   /**
