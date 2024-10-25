@@ -1131,6 +1131,7 @@ main {
   margin-bottom: 30px;
   border: 1px solid var(--jet);
   overflow: hidden;
+  margin-top: 15px;
 }
 
 .mapbox figure { height: 100%; }
