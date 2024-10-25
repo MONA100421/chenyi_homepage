@@ -71,7 +71,7 @@ def get_weather():
         weather_data = fetch_weather_data(city)
         
         if not weather_data:
-            return jsonify({'error': f'Unable to fetch weather data for {city}'}), 400
+            return jsonify({'error': f'Wow, you sure {city} is on Earth?'}), 400
         
         return jsonify({'weather': weather_data})
     except Exception as e:
