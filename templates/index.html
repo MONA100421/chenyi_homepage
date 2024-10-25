@@ -894,15 +894,6 @@
 
         <section class="blog-posts">
 
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
                 <div class="blog-content">
 
                   <div class="blog-meta">
@@ -1075,7 +1066,7 @@
 
 
       <!--
-        - #CONTACT
+      - #CONTACT
       -->
 
       <article class="contact" data-page="contact">
@@ -1083,10 +1074,10 @@
         <header>
           <h2 class="h2 article-title">Contact</h2>
         </header>
-      
+
         <!-- Weather and News Section -->
         <div class="weather-news-container">
-          
+
           <!-- Weather Information Section -->
           <div class="weather-box">
             <h3 class="h3">Weather Information</h3>
@@ -1097,17 +1088,25 @@
 
             <div class="weather-data">
               {% if weather %}
-                <div class="city-info">
-                  <p><img src="/assets/images/landmark.ico" alt "landmark" style="wisth:20px; height:20px"> {{ weather.city }}</p>
-                </div>
-                <div class="temperature-info">
-                  <p><img src="/assets/images/celsius.ico" alt "celsius" style="wisth:20px; height:20px"> {{ weather.temperature }}°C</p>
-                </div>
-                <div class="description-info">
-                  <p><img src="/assets/images/condition.ico" alt "condition" style="wisth:20px; height:20px"> {{ weather.description }}</p>
-                </div>
+              <!-- City and Landmark -->
+              <div class="weather-info-row city-info">
+                <img src="/assets/images/landmark.ico" alt="landmark" class="icon">
+                <span>{{ weather.city }}</span>
+              </div>
+
+              <!-- Temperature and Celsius Icon -->
+              <div class="weather-info-row temperature-info">
+                <img src="/assets/images/celsius.ico" alt="celsius" class="icon">
+                <span>{{ weather.temperature }}°C</span>
+              </div>
+
+              <!-- Description and Condition Icon -->
+              <div class="weather-info-row description-info">
+                <img src="/assets/images/condition.ico" alt="condition" class="icon">
+                <span>{{ weather.description }}</span>
+              </div>
               {% else %}
-                <p>Weather information is currently unavailable.</p>
+              <p>Weather information is currently unavailable.</p>
               {% endif %}
             </div>
           </div>
@@ -1116,20 +1115,20 @@
           <div class="news-box">
             <h3 class="h3">Latest News</h3>
             {% if news %}
-              <ul class="news-list">
-                {% for article in news %}
-                  <li class="news-item">
-                    <a href="{{ article.link }}" target="_blank" class="news-link">{{ article.title }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
+            <ul class="news-list">
+              {% for article in news %}
+              <li class="news-item">
+                <a href="{{ article.link }}" target="_blank" class="news-link">{{ article.title }}</a>
+              </li>
+              {% endfor %}
+            </ul>
             {% else %}
-              <p>Latest news is currently unavailable.</p>
+            <p>Latest news is currently unavailable.</p>
             {% endif %}
           </div>
 
         </div>
-      
+
         <!-- Map Section -->
         <section class="mapbox" data-mapbox>
           <figure>
@@ -1138,7 +1137,7 @@
               width="400" height="300" loading="lazy"></iframe>
           </figure>
         </section>
-      
+
         <!-- Contact Form Section -->
         <section class="contact-form">
           <h3 class="h3 form-title">Contact Form</h3>
@@ -1152,67 +1151,65 @@
               <ion-icon name="paper-plane"></ion-icon>
               <span>Send Message</span>
             </button>
-          </form>          
+          </form>
         </section>
-      
+
       </article>
-      
-    </div>
 
-  </main>
+      </main>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.querySelector('form[data-form]');
-      const cityInput = document.getElementById('city');
-      const weatherInfo = document.querySelector('.weather-info');
-  
-      cityInput.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-          event.preventDefault(); // 阻止表單的默認提交行為
-          const city = cityInput.value;
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const form = document.querySelector('form[data-form]');
+          const cityInput = document.getElementById('city');
+          const weatherInfo = document.querySelector('.weather-info');
 
-  
-        // 發送 AJAX 請求
-        fetch('/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ city: city }), // 將用戶輸入的城市發送給後端
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.weather) {
-            // 更新天氣資訊到頁面
-            weatherInfo.innerHTML = `
-              <p><strong>City:</strong> ${data.weather.city}</p>
-              <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
-              <p><strong>Condition:</strong> ${data.weather.description}</p>
-            `;
-          } else {
-            weatherInfo.innerHTML = `<p>Weather information is currently unavailable.</p>`;
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
+          cityInput.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+              event.preventDefault(); // 阻止表單的默認提交行為
+              const city = cityInput.value;
+
+              // 發送 AJAX 請求
+              fetch('/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ city: city }), // 將用戶輸入的城市發送給後端
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.weather) {
+                  // 更新天氣資訊到頁面
+                  weatherInfo.innerHTML = `
+                    <p><strong>City:</strong> ${data.weather.city}</p>
+                    <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
+                    <p><strong>Condition:</strong> ${data.weather.description}</p>
+                  `;
+                } else {
+                  weatherInfo.innerHTML = `<p>Weather information is currently unavailable.</p>`;
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
+              });
+            }
+          });
         });
-      });
-    });
-  </script>
+      </script>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
+      <!--
+        - custom js link
+      -->
+      <script src="./assets/js/script.js"></script>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+      <!--
+        - ionicon link
+      -->
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-</body>
+      </body>
 
-</html>
+      </html>

@@ -1227,9 +1227,13 @@ textarea.form-input::-webkit-resizer { display: none; }
   #WEATHER AND NEWS STYLING - HIGH-END DESIGN
 \*-----------------------------------*/
 
+/*-----------------------------------*\
+  #WEATHER AND NEWS STYLING - HIGH-END DESIGN
+\*-----------------------------------*/
+
 /* 容納天氣資訊與新聞的主要容器 */
 .weather-news-container {
-  display: flex; /* 使用 flexbox 來讓天氣與新聞區塊橫向排列 */
+  display: flex;
   flex-direction: column; /* 手機或窄螢幕時會垂直排列 */
   gap: 20px; /* 區塊之間的間距 */
 }
@@ -1276,59 +1280,38 @@ textarea.form-input::-webkit-resizer { display: none; }
   padding-bottom: 10px;
 }
 
-.weather-data {
-  display: inline-flex;
+/* 城市信息行內顯示 */
+.city-info, .temperature-info, .description-info {
+  display: flex; /* 使用 flexbox 水平對齊圖標和文字 */
   align-items: center;
+  margin-bottom: 10px;
 }
 
-.weather-data img {
-  margin-right: 5px;
+/* 圖標樣式 */
+.city-info img, .temperature-info img, .description-info img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
   filter: invert(1);  /* 反白圖標 */
 }
 
-/* 天氣資訊的樣式 */
-.weather-box p {
-  color: var(--white-1);
+/* 城市文本樣式 */
+.city-info span, .temperature-info span, .description-info span {
   font-size: var(--fs-6);
-  margin-bottom: 20px;
-  line-height: 1.8;
+  color: var(--white-1);
 }
 
-.weather-box .temperature-info {
+/* 調整溫度樣式 */
+.temperature-info {
   font-size: 2em;
   font-weight: bold;
   color: var(--light-gray);
-  margin-bottom: 20px;
 }
 
-/* 最新新聞區塊的樣式 */
-.news-box ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.news-box li {
-  margin-bottom: 18px;
-  padding: 15px;
-  background-color: var(--smoky-black);
-  border-radius: 15px;
-  transition: background-color 0.3s ease;
-}
-
-.news-box li:hover {
-  background-color: var(--eerie-black-2);
-}
-
-.news-box a {
-  color: var(--orange-yellow-crayola);
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-.news-box a:hover {
-  color: var(--vegas-gold);
-  text-decoration: underline;
+/* 調整描述信息樣式 */
+.description-info {
+  font-size: 1.2em;
+  color: var(--light-gray);
 }
 
 /* 響應式設計 */
