@@ -321,7 +321,7 @@ main {
   transition: var(--transition-2);
 }
 
-.sidebar.active { max-height: 584px; }
+.sidebar.active { max-height: 600px; } /** 584->600 **/
 
 .sidebar-info {
   position: relative;
@@ -1348,7 +1348,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   /* 當 Sidebar 展開時，高度增加 */
   .sidebar.active {
-    max-height: 450px; /* 300->450展開後的高度 */
+    max-height: 500px; /* 300->450->500展開後的高度 */
   }
   
   .weather-news-container {
@@ -1474,7 +1474,7 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-bottom: 30px;
   }
 
-  .sidebar.active { max-height: 584px; }
+  .sidebar.active { max-height: 600px; } /** 584->600 **/
 
   .sidebar-info { gap: 25px; }
 
