@@ -1098,13 +1098,13 @@
             <div class="weather-data">
               {% if weather %}
                 <div class="city-info">
-                  <p><strong>City:</strong> {{ weather.city }}</p>
+                  <p><img src="/assets/images/landmark.ico" alt "landmark" style="wisth:20px; height:20px"> {{ weather.city }}</p>
                 </div>
                 <div class="temperature-info">
-                  <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+                  <p><img src="/assets/images/celsius.ico" alt "celsius" style="wisth:20px; height:20px"> {{ weather.temperature }}°C</p>
                 </div>
                 <div class="description-info">
-                  <p><strong>Condition:</strong> {{ weather.description }}</p>
+                  <p><img src="/assets/images/condition.ico" alt "condition" style="wisth:20px; height:20px"> {{ weather.description }}</p>
                 </div>
               {% else %}
                 <p>Weather information is currently unavailable.</p>
