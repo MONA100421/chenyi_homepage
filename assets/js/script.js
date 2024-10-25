@@ -189,22 +189,24 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);  // 檢查返回的數據
-      if (data.weather) {
-        // 更新天氣資訊到頁面
-        weatherInfo.innerHTML = `
-          <div class="weather-info-row">
+        console.log(data);  // 檢查返回的數據
+        if (data.weather) {
+            // 更新天氣資訊到頁面
+            weatherInfo.innerHTML = `
+                <div class="weather-info-row">
                     <div class="city-info">
                         <img src="/assets/images/landmark.ico" alt="landmark" class="icon">
                         <span>${data.weather.city}</span>
                     </div>
                 </div>
+
                 <div class="weather-info-row">
                     <div class="temperature-info">
                         <img src="/assets/images/celsius.ico" alt="celsius" class="icon">
                         <span>${data.weather.temperature}°C</span>
                     </div>
                 </div>
+
                 <div class="weather-info-row">
                     <div class="description-info">
                         <img src="/assets/images/condition.ico" alt="condition" class="icon">
@@ -212,16 +214,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             `;
-      } else if (data.error) {
-        weatherInfo.innerHTML = `<p>${data.error}</p>`;
-      }
+        } else if (data.error) {
+            // 錯誤處理
+            weatherInfo.innerHTML = `
+                <div class="weather-info-row error-message">
+                    <span>${data.error}</span>
+                </div>
+            `;
+        }
     })
     .catch(error => {
-      console.error('Error:', error);
-      weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
-    });
-  }
-});
-
-
-
+        console.error('Error:', error);
+        weatherInfo.innerHTML = `
+            <div class="weather-info-row error-message">
+                <span>Error fetching weather data.</span>
+            </div>
+        `;
+      });
+    }
+  });

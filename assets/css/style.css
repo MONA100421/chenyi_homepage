@@ -1314,6 +1314,19 @@ textarea.form-input::-webkit-resizer { display: none; }
   color: var(--light-gray);
 }
 
+.error-message {
+  color: var(--white-1);  /* 與 weather-data 相同的文字顏色 */
+  font-size: var(--fs-6); /* 與 weather-data 相同的字體大小 */
+  line-height: 1.8;       /* 與 weather-data 保持一致的行距 */
+  margin-bottom: 20px;    /* 與 weather-data 相同的間距 */
+}
+
+.weather-info-row.error-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 /* 響應式設計 */
 @media (max-width: 768px) {
   .weather-news-container {
