@@ -45,7 +45,7 @@ def fetch_weather_data(city):
         # 返回天氣數據
         return {
             'city': data['name'],
-            'temperature': round(data['main']['temp'], 2),
+            'temperature': round(data['main']['temp'], 1),
             'description': data['weather'][0]['description']
         }
     except requests.exceptions.RequestException as e:
