@@ -1276,12 +1276,12 @@ textarea.form-input::-webkit-resizer { display: none; }
   padding-bottom: 10px;
 }
 
-.weather-box {
+.weather-data {
   display: inline-flex;
   align-items: center;
 }
 
-.weather-box img {
+.weather-data img {
   margin-right: 5px;
   filter: invert(1);  /* 反白圖標 */
 }
