@@ -37,7 +37,8 @@ def fetch_weather_data(city):
         response = requests.get(url)
         response.raise_for_status()  # 檢查是否有錯誤的狀態碼
         data = response.json()
-
+        print(f"API Response Data: {data}")
+        
         # 檢查 API 返回的狀態碼是否為 200
         if data.get('cod') != 200:
             return None

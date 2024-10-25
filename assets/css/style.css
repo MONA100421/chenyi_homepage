@@ -1276,6 +1276,16 @@ textarea.form-input::-webkit-resizer { display: none; }
   padding-bottom: 10px;
 }
 
+.weather-box {
+  display: inline-flex;
+  align-items: center;
+}
+
+.weather-box img {
+  margin-right: 5px;
+  filter: invert(1);  /* 反白圖標 */
+}
+
 /* 天氣資訊的樣式 */
 .weather-box p {
   color: var(--white-1);
