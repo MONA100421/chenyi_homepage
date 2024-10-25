@@ -1227,95 +1227,112 @@ textarea.form-input::-webkit-resizer { display: none; }
   #WEATHER AND NEWS STYLING - HIGH-END DESIGN
 \*-----------------------------------*/
 
-/* 包含表單和天氣資訊的容器 */
-.weather-news-wrapper {
+/* 容納天氣資訊與新聞的主要容器 */
+.weather-news-container {
+  display: flex; /* 使用 flexbox 來讓天氣與新聞區塊橫向排列 */
+  flex-direction: column; /* 手機或窄螢幕時會垂直排列 */
+  gap: 20px; /* 區塊之間的間距 */
+}
+
+/* 天氣資訊的獨立框架 */
+.weather-box {
   background-color: var(--eerie-black-1); /* 深色背景 */
-  padding: 30px; /* 添加內邊距 */
-  border-radius: 20px; /* 圓角效果 */
-  margin-bottom: 35px; /* 與其他元素間距 */
-  border: 1px solid var(--vegas-gold); /* 金色邊框 */
-  box-shadow: var(--shadow-3); /* 添加陰影效果 */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑的懸停效果 */
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid var(--vegas-gold);
+  box-shadow: var(--shadow-3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.weather-news-wrapper:hover {
-  transform: translateY(-5px); /* 懸停提升效果 */
-  box-shadow: var(--shadow-5); /* 懸停時加強陰影 */
+.weather-box:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-5);
 }
 
-/* 調整天氣和新聞區塊的設計 */
-.weather-info h3, .latest-news h3 {
-  color: var(--orange-yellow-crayola); /* 標題顏色 */
+/* 最新新聞的獨立框架 */
+.news-box {
+  background-color: var(--eerie-black-1);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid var(--vegas-gold);
+  box-shadow: var(--shadow-3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-box:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-5);
+}
+
+/* 標題樣式 */
+.weather-box h3, .news-box h3 {
+  color: var(--orange-yellow-crayola);
   font-size: var(--fs-5);
   margin-bottom: 25px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 2px solid var(--orange-yellow-crayola); /* 標題下劃線 */
+  border-bottom: 2px solid var(--orange-yellow-crayola);
   padding-bottom: 10px;
 }
 
-.weather-info p, .latest-news ul {
-  color: var(--white-1); /* 內容字體顏色 */
+/* 天氣資訊的樣式 */
+.weather-box p {
+  color: var(--white-1);
   font-size: var(--fs-6);
   margin-bottom: 20px;
   line-height: 1.8;
 }
 
-/* Latest news list styling */
-.latest-news ul {
+.weather-box .temperature-info {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--light-gray);
+  margin-bottom: 20px;
+}
+
+/* 最新新聞區塊的樣式 */
+.news-box ul {
   list-style-type: none;
   padding: 0;
 }
 
-.latest-news li {
+.news-box li {
   margin-bottom: 18px;
-  padding: 15px; /* 調整間距 */
-  background-color: var(--smoky-black); /* 子元素背景 */
-  border-radius: 15px; /* 圓角 */
+  padding: 15px;
+  background-color: var(--smoky-black);
+  border-radius: 15px;
   transition: background-color 0.3s ease;
 }
 
-.latest-news li:hover {
-  background-color: var(--eerie-black-2); /* 懸停背景變暗 */
+.news-box li:hover {
+  background-color: var(--eerie-black-2);
 }
 
-.latest-news a {
-  color: var(--orange-yellow-crayola); /* 鏈接顏色 */
+.news-box a {
+  color: var(--orange-yellow-crayola);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
-.latest-news a:hover {
-  color: var(--vegas-gold); /* 懸停時的鏈接顏色 */
+.news-box a:hover {
+  color: var(--vegas-gold);
   text-decoration: underline;
 }
 
-/* 調整天氣信息樣式 */
-.weather-info .temperature-info {
-  font-size: 2em;
-  font-weight: bold;
-  color: var(--light-gray); /* 溫度字體顏色 */
-  margin-bottom: 20px;
-}
-
-/* Weather condition icon */
-.weather-info .condition-icon {
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  margin-right: 15px;
-  vertical-align: middle;
-}
-
-/* Responsive adjustments for mobile */
+/* 響應式設計 */
 @media (max-width: 768px) {
-  .weather-news-wrapper, .latest-news {
+  .weather-news-container {
+    flex-direction: column; /* 在小螢幕上，兩個區塊將堆疊顯示 */
+  }
+
+  .weather-box, .news-box {
     padding: 20px;
     border-radius: 10px;
   }
 }
+
 
 
 /*-----------------------------------*\

@@ -1085,36 +1085,35 @@
         </header>
       
         <!-- Weather and News Section -->
-        <section class="info-container section-padding">
+        <div class="weather-news-container">
+          
           <!-- Weather Information Section -->
-          <div class="weather-news-wrapper">
-            <div class="weather-display">
-              <h3 class="h3">Weather Information</h3>
-              <form action="/contact" method="POST" class="form" data-form onsubmit="return false;">
-                <label for="city">Find Weather for City:</label>
-                <input type="text" id="city" name="city" placeholder="Enter city to check the weather" required>
-              </form>
-              
-              <div class="weather-info">
-                {% if weather %}
-                  <div class="city-info">
-                    <h2>{{ weather.city }}</h2>
-                  </div>
-                  <div class="temperature-info">
-                    <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
-                  </div>
-                  <div class="description-info">
-                    <p><strong>Condition:</strong> {{ weather.description }}</p>
-                  </div>
-                {% else %}
-                  <p>Weather information is currently unavailable.</p>
-                {% endif %}
-              </div>
+          <div class="weather-box">
+            <h3 class="h3">Weather Information</h3>
+            <form action="/contact" method="POST" class="form" data-form onsubmit="return false;">
+              <label for="city">Find Weather for City:</label>
+              <input type="text" id="city" name="city" placeholder="Enter city to check the weather" required>
+            </form>
+
+            <div class="weather-data">
+              {% if weather %}
+                <div class="city-info">
+                  <h2>{{ weather.city }}</h2>
+                </div>
+                <div class="temperature-info">
+                  <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+                </div>
+                <div class="description-info">
+                  <p><strong>Condition:</strong> {{ weather.description }}</p>
+                </div>
+              {% else %}
+                <p>Weather information is currently unavailable.</p>
+              {% endif %}
             </div>
           </div>
-      
+
           <!-- Latest News Section -->
-          <div class="latest-news">
+          <div class="news-box">
             <h3 class="h3">Latest News</h3>
             {% if news %}
               <ul class="news-list">
@@ -1128,7 +1127,8 @@
               <p>Latest news is currently unavailable.</p>
             {% endif %}
           </div>
-        </section>
+
+        </div>
       
         <!-- Map Section -->
         <section class="mapbox" data-mapbox>
