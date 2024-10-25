@@ -1371,7 +1371,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   .sidebar {
     max-height: 150px; /* 設定縮小的高度 */
     margin-bottom: 20px;
-  
+  }
   /**
    * #PORTFOLIO, BLOG 
    */
