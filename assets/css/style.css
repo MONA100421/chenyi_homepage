@@ -1285,7 +1285,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   display: flex; /* 使用 flexbox 水平對齊圖標和文字 */
   align-items: center;
   margin-bottom: 10px;
-  margin-top: 10px
+  margin-top: 15px
 }
 
 /* 圖標樣式 */
