@@ -193,10 +193,25 @@ document.addEventListener("DOMContentLoaded", function () {
       if (data.weather) {
         // 更新天氣資訊到頁面
         weatherInfo.innerHTML = `
-          <p><strong>City:</strong> ${data.weather.city}</p>
-          <p><strong>Temperature:</strong> ${data.weather.temperature}°C</p>
-          <p><strong>Condition:</strong> ${data.weather.description}</p>
-        `;
+          <div class="weather-info-row">
+                    <div class="city-info">
+                        <img src="/assets/images/landmark.ico" alt="landmark" class="icon">
+                        <span>${data.weather.city}</span>
+                    </div>
+                </div>
+                <div class="weather-info-row">
+                    <div class="temperature-info">
+                        <img src="/assets/images/celsius.ico" alt="celsius" class="icon">
+                        <span>${data.weather.temperature}°C</span>
+                    </div>
+                </div>
+                <div class="weather-info-row">
+                    <div class="description-info">
+                        <img src="/assets/images/condition.ico" alt="condition" class="icon">
+                        <span>${data.weather.description}</span>
+                    </div>
+                </div>
+            `;
       } else if (data.error) {
         weatherInfo.innerHTML = `<p>${data.error}</p>`;
       }
