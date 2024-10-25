@@ -1348,7 +1348,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   /* 當 Sidebar 展開時，高度增加 */
   .sidebar.active {
-    max-height: 300px; /* 展開後的高度 */
+    max-height: 450px; /* 300->450展開後的高度 */
   }
   
   .weather-news-container {
