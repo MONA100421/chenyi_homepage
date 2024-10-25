@@ -1302,6 +1302,13 @@ textarea.form-input::-webkit-resizer { display: none; }
   color: var(--white-1);
 }
 
+/* 調整landmark樣式 */
+.city-info {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--light-gray);
+}
+
 /* 調整溫度樣式 */
 .temperature-info {
   font-size: 2em;
@@ -1311,7 +1318,10 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 /* 調整描述信息樣式 */
 .description-info {
-  font-size: 1.2em;
+/*font-size: 1.2em;
+  color: var(--light-gray); */
+  font-size: 2em;
+  font-weight: bold;
   color: var(--light-gray);
 }
 
@@ -1320,7 +1330,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   font-size: var(--fs-6); /* 與 weather-data 相同的字體大小 */
   line-height: 1.8;       /* 與 weather-data 保持一致的行距 */
   margin-bottom: 10px;    /* 與 weather-data 相同的間距 */
-  margin-top: 10px
+  margin-top: 15px
 }
 
 .weather-info-row.error-message {
