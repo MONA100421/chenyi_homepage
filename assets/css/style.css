@@ -1285,6 +1285,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   display: flex; /* 使用 flexbox 水平對齊圖標和文字 */
   align-items: center;
   margin-bottom: 10px;
+  margin-top: 10px
 }
 
 /* 圖標樣式 */
@@ -1318,13 +1319,15 @@ textarea.form-input::-webkit-resizer { display: none; }
   color: var(--white-1);  /* 與 weather-data 相同的文字顏色 */
   font-size: var(--fs-6); /* 與 weather-data 相同的字體大小 */
   line-height: 1.8;       /* 與 weather-data 保持一致的行距 */
-  margin-bottom: 20px;    /* 與 weather-data 相同的間距 */
+  margin-bottom: 10px;    /* 與 weather-data 相同的間距 */
+  margin-top: 10px
 }
 
 .weather-info-row.error-message {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-top: 25px; /* 改變間距大小 */
 }
 
 /* 響應式設計 */
