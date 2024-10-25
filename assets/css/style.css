@@ -1338,6 +1338,18 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 /* 響應式設計 */
+/* 當螢幕寬度超過 768px 的樣式 */
+@media (min-width: 768px) {
+  .sidebar {
+    max-height: none; /* 大螢幕上預設顯示全部 */
+  }
+
+  /* 保持展開樣式，使得在切換到大螢幕時仍然展開 */
+  .sidebar.active {
+    max-height: none; /* 大螢幕上無需限制高度，顯示全部內容 */
+  }
+}
+
 @media (max-width: 768px) {/* 768 */
   
   /* Sidebar 高度縮小至 100->150px */
