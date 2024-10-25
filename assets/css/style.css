@@ -316,7 +316,7 @@ main {
 
 .sidebar {
   margin-bottom: 15px;
-  max-height: 250px;
+  max-height: 225px;
   overflow: hidden;
   transition: var(--transition-2);
 }
@@ -1170,7 +1170,7 @@ main {
 textarea.form-input {
   min-height: 100px;
   height: 120px;
-  max-height: 250px;
+  max-height: 225px;
   resize: vertical;
   margin-bottom: 25px;
 }
@@ -1448,7 +1448,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .sidebar {
-    max-height: 250px;
+    max-height: 225px;
     margin-bottom: 30px;
   }
 
