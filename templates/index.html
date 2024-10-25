@@ -1087,27 +1087,29 @@
         <!-- Weather and News Section -->
         <section class="info-container section-padding">
           <!-- Weather Information Section -->
-          <div class="weather-display">
-            <h3 class="h3">Weather Information</h3>
-            <form action="/contact" method="POST" class="form" data-form onsubmit="return false;">
-              <label for="city">Find Weather for City:</label>
-              <input type="text" id="city" name="city" placeholder="Enter city to check the weather" required>
-            </form>
-            
-            <div class="weather-info">
-              {% if weather %}
-                <div class="city-info">
-                  <h2>{{ weather.city }}</h2>
-                </div>
-                <div class="temperature-info">
-                  <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
-                </div>
-                <div class="description-info">
-                  <p><strong>Condition:</strong> {{ weather.description }}</p>
-                </div>
-              {% else %}
-                <p>Weather information is currently unavailable.</p>
-              {% endif %}
+          <div class="weather-news-wrapper">
+            <div class="weather-display">
+              <h3 class="h3">Weather Information</h3>
+              <form action="/contact" method="POST" class="form" data-form onsubmit="return false;">
+                <label for="city">Find Weather for City:</label>
+                <input type="text" id="city" name="city" placeholder="Enter city to check the weather" required>
+              </form>
+              
+              <div class="weather-info">
+                {% if weather %}
+                  <div class="city-info">
+                    <h2>{{ weather.city }}</h2>
+                  </div>
+                  <div class="temperature-info">
+                    <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+                  </div>
+                  <div class="description-info">
+                    <p><strong>Condition:</strong> {{ weather.description }}</p>
+                  </div>
+                {% else %}
+                  <p>Weather information is currently unavailable.</p>
+                {% endif %}
+              </div>
             </div>
           </div>
       

@@ -1227,36 +1227,36 @@ textarea.form-input::-webkit-resizer { display: none; }
   #WEATHER AND NEWS STYLING - HIGH-END DESIGN
 \*-----------------------------------*/
 
-.weather-info, .latest-news {
-  background-color: var(--eerie-black-1); /* Darker consistent background for both sections */
-  padding: 30px; /* Ample padding for a comfortable look */
-  border-radius: 20px; /* Smooth rounded corners */
-  margin-bottom: 35px; /* Create more space between sections */
-  border: 1px solid var(--vegas-gold); /* Subtle gold border for both sections */
-  box-shadow: var(--shadow-3); /* Deep shadow for a floating effect */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+/* 包含表單和天氣資訊的容器 */
+.weather-news-wrapper {
+  background-color: var(--eerie-black-1); /* 深色背景 */
+  padding: 30px; /* 添加內邊距 */
+  border-radius: 20px; /* 圓角效果 */
+  margin-bottom: 35px; /* 與其他元素間距 */
+  border: 1px solid var(--vegas-gold); /* 金色邊框 */
+  box-shadow: var(--shadow-3); /* 添加陰影效果 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑的懸停效果 */
 }
 
-.weather-info:hover, .latest-news:hover {
-  transform: translateY(-5px); /* Small hover lift effect */
-  box-shadow: var(--shadow-5); /* Stronger shadow when hovered */
+.weather-news-wrapper:hover {
+  transform: translateY(-5px); /* 懸停提升效果 */
+  box-shadow: var(--shadow-5); /* 懸停時加強陰影 */
 }
 
-/* Titles styling for both sections */
+/* 調整天氣和新聞區塊的設計 */
 .weather-info h3, .latest-news h3 {
-  color: var(--orange-yellow-crayola); /* Matching title color */
+  color: var(--orange-yellow-crayola); /* 標題顏色 */
   font-size: var(--fs-5);
   margin-bottom: 25px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 2px solid var(--orange-yellow-crayola); /* Consistent underline */
+  border-bottom: 2px solid var(--orange-yellow-crayola); /* 標題下劃線 */
   padding-bottom: 10px;
 }
 
-/* Content paragraphs styling */
 .weather-info p, .latest-news ul {
-  color: var(--white-1); /* Clean white font for content */
+  color: var(--white-1); /* 內容字體顏色 */
   font-size: var(--fs-6);
   margin-bottom: 20px;
   line-height: 1.8;
@@ -1270,33 +1270,33 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .latest-news li {
   margin-bottom: 18px;
-  padding: 15px; /* More padding to feel spacious */
-  background-color: var(--smoky-black); /* Subtle dark background */
-  border-radius: 15px; /* Rounded corners for each item */
+  padding: 15px; /* 調整間距 */
+  background-color: var(--smoky-black); /* 子元素背景 */
+  border-radius: 15px; /* 圓角 */
   transition: background-color 0.3s ease;
 }
 
 .latest-news li:hover {
-  background-color: var(--eerie-black-2); /* Darker highlight on hover */
+  background-color: var(--eerie-black-2); /* 懸停背景變暗 */
 }
 
 .latest-news a {
-  color: var(--orange-yellow-crayola); /* Consistent link color */
+  color: var(--orange-yellow-crayola); /* 鏈接顏色 */
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .latest-news a:hover {
-  color: var(--vegas-gold); /* Lighter gold hover effect */
+  color: var(--vegas-gold); /* 懸停時的鏈接顏色 */
   text-decoration: underline;
 }
 
-/* Weather information temperature styling */
+/* 調整天氣信息樣式 */
 .weather-info .temperature-info {
   font-size: 2em;
   font-weight: bold;
-  color: var(--light-gray); /* Soft, cool color for temperature */
+  color: var(--light-gray); /* 溫度字體顏色 */
   margin-bottom: 20px;
 }
 
@@ -1311,11 +1311,12 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
-  .weather-info, .latest-news {
+  .weather-news-wrapper, .latest-news {
     padding: 20px;
     border-radius: 10px;
   }
 }
+
 
 /*-----------------------------------*\
   #RESPONSIVE
