@@ -1228,38 +1228,38 @@ textarea.form-input::-webkit-resizer { display: none; }
 \*-----------------------------------*/
 
 .weather-info, .latest-news {
-  background-color: var(--jet); /* Deep background for consistency */
-  padding: 30px; /* More padding for spacious feel */
-  border-radius: 20px; /* Softer, rounded corners */
-  margin-bottom: 35px; /* Increase spacing between sections */
-  border: 1px solid rgba(255, 193, 7, 0.3); /* Subtle gradient-style border */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for a floating effect */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transitions */
+  background-color: var(--eerie-black-1); /* Darker consistent background for both sections */
+  padding: 30px; /* Ample padding for a comfortable look */
+  border-radius: 20px; /* Smooth rounded corners */
+  margin-bottom: 35px; /* Create more space between sections */
+  border: 1px solid var(--vegas-gold); /* Subtle gold border for both sections */
+  box-shadow: var(--shadow-3); /* Deep shadow for a floating effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
 }
 
 .weather-info:hover, .latest-news:hover {
-  transform: translateY(-5px); /* Slight lift on hover */
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+  transform: translateY(-5px); /* Small hover lift effect */
+  box-shadow: var(--shadow-5); /* Stronger shadow when hovered */
 }
 
-/* Titles styling */
+/* Titles styling for both sections */
 .weather-info h3, .latest-news h3 {
-  color: var(--orange-yellow-crayola); /* Warm highlight color */
+  color: var(--orange-yellow-crayola); /* Matching title color */
   font-size: var(--fs-5);
-  margin-bottom: 25px; /* More space under the title */
-  font-weight: 700; /* Bolder font for prominence */
+  margin-bottom: 25px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em; /* Slight letter spacing for elegance */
-  border-bottom: 2px solid rgba(255, 193, 7, 0.5); /* Underline effect for title */
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--orange-yellow-crayola); /* Consistent underline */
   padding-bottom: 10px;
 }
 
 /* Content paragraphs styling */
 .weather-info p, .latest-news ul {
-  color: var(--white-2); /* Clean white font for content */
+  color: var(--white-1); /* Clean white font for content */
   font-size: var(--fs-6);
-  margin-bottom: 20px; /* Spaced out paragraphs */
-  line-height: 1.8; /* Increased line height for readability */
+  margin-bottom: 20px;
+  line-height: 1.8;
 }
 
 /* Latest news list styling */
@@ -1269,34 +1269,34 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 .latest-news li {
-  margin-bottom: 18px; /* Increase spacing between news items */
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.05); /* Subtle background for each news item */
-  border-radius: 12px; /* Rounded corners for each item */
+  margin-bottom: 18px;
+  padding: 15px; /* More padding to feel spacious */
+  background-color: var(--smoky-black); /* Subtle dark background */
+  border-radius: 15px; /* Rounded corners for each item */
   transition: background-color 0.3s ease;
 }
 
 .latest-news li:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
+  background-color: var(--eerie-black-2); /* Darker highlight on hover */
 }
 
 .latest-news a {
   color: var(--orange-yellow-crayola); /* Consistent link color */
   text-decoration: none;
-  font-weight: 600; /* Bolder for visibility */
-  transition: color 0.3s ease; /* Smooth color transition */
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 .latest-news a:hover {
-  color: rgba(255, 193, 7, 0.8); /* Lighter yellow on hover */
-  text-decoration: underline; /* Underline for emphasis */
+  color: var(--vegas-gold); /* Lighter gold hover effect */
+  text-decoration: underline;
 }
 
 /* Weather information temperature styling */
 .weather-info .temperature-info {
-  font-size: 2em; /* Larger font for temperature */
+  font-size: 2em;
   font-weight: bold;
-  color: #00d4ff; /* Cool cyan for temperature, indicating freshness */
+  color: var(--light-gray); /* Soft, cool color for temperature */
   margin-bottom: 20px;
 }
 
@@ -1306,14 +1306,16 @@ textarea.form-input::-webkit-resizer { display: none; }
   width: 60px;
   height: 60px;
   margin-right: 15px;
-  vertical-align: middle; /* Align icon with text */
+  vertical-align: middle;
 }
 
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
   .weather-info, .latest-news {
     padding: 20px;
-    border-radius: 
+    border-radius: 10px;
+  }
+}
 
 /*-----------------------------------*\
   #RESPONSIVE

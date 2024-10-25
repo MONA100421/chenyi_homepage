@@ -1083,49 +1083,51 @@
         <header>
           <h2 class="h2 article-title">Contact</h2>
         </header>
-
-        <!-- Weather Information Section -->
-        <section class="weather-display">
-          <h3 class="h3">Weather Information</h3>
-          <form action="/contact" method="POST" class="form" data-form onsubmit="return false;">
-            <label for="city">Find Weather for City:</label>
-            <input type="text" id="city" name="city" placeholder="Enter city to check the weather" required>
-            <!-- You can remove the Get Weather button if you implement the enter key search -->
-          </form>
-          
-          <div class="weather-info">
-            {% if weather %}
-              <div class="city-info">
-                <h2>{{ weather.city }}</h2>
-              </div>
-              <div class="temperature-info">
-                <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
-              </div>
-              <div class="description-info">
-                <p><strong>Condition:</strong> {{ weather.description }}</p>
-              </div>
+      
+        <!-- Weather and News Section -->
+        <section class="info-container section-padding">
+          <!-- Weather Information Section -->
+          <div class="weather-display">
+            <h3 class="h3">Weather Information</h3>
+            <form action="/contact" method="POST" class="form" data-form onsubmit="return false;">
+              <label for="city">Find Weather for City:</label>
+              <input type="text" id="city" name="city" placeholder="Enter city to check the weather" required>
+            </form>
+            
+            <div class="weather-info">
+              {% if weather %}
+                <div class="city-info">
+                  <h2>{{ weather.city }}</h2>
+                </div>
+                <div class="temperature-info">
+                  <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+                </div>
+                <div class="description-info">
+                  <p><strong>Condition:</strong> {{ weather.description }}</p>
+                </div>
+              {% else %}
+                <p>Weather information is currently unavailable.</p>
+              {% endif %}
+            </div>
+          </div>
+      
+          <!-- Latest News Section -->
+          <div class="latest-news">
+            <h3 class="h3">Latest News</h3>
+            {% if news %}
+              <ul class="news-list">
+                {% for article in news %}
+                  <li class="news-item">
+                    <a href="{{ article.link }}" target="_blank" class="news-link">{{ article.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
             {% else %}
-              <p>Weather information is currently unavailable.</p>
+              <p>Latest news is currently unavailable.</p>
             {% endif %}
           </div>
         </section>
-        
-        <!-- Latest News Section -->
-        <section class="latest-news section-padding">
-          <h3 class="h3">Latest News</h3>
-          {% if news %}
-            <ul class="news-list">
-              {% for article in news %}
-                <li class="news-item">
-                  <a href="{{ article.link }}" target="_blank" class="news-link">{{ article.title }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p>Latest news is currently unavailable.</p>
-          {% endif %}
-        </section>
-        
+      
         <!-- Map Section -->
         <section class="mapbox" data-mapbox>
           <figure>
@@ -1134,12 +1136,10 @@
               width="400" height="300" loading="lazy"></iframe>
           </figure>
         </section>
-
-         <!-- Contact Form Section -->
-         <section class="contact-form">
-
+      
+        <!-- Contact Form Section -->
+        <section class="contact-form">
           <h3 class="h3 form-title">Contact Form</h3>
-
           <form action="{{ url_for('submit') }}" method="POST" class="form" data-form>
             <div class="input-wrapper">
               <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
@@ -1151,11 +1151,10 @@
               <span>Send Message</span>
             </button>
           </form>          
-
         </section>
-
+      
       </article>
-
+      
     </div>
 
   </main>
