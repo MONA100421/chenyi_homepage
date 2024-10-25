@@ -1372,7 +1372,11 @@ textarea.form-input::-webkit-resizer { display: none; }
  */
 
 @media (min-width: 450px) {
-
+  
+  .sidebar {
+    max-height: 100%; /* 設定縮小時也能100%展開sidebar info */
+    margin-bottom: 20px;
+  }
   /**
    * client
    */
@@ -1380,10 +1384,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   .clients-item { min-width: calc(33.33% - 10px); }
 
 
-  .sidebar {
-    max-height: 100%; /* 設定縮小時也能100%展開sidebar info */
-    margin-bottom: 20px;
-  }
+  
   /**
    * #PORTFOLIO, BLOG 
    */
@@ -1406,6 +1407,12 @@ textarea.form-input::-webkit-resizer { display: none; }
     max-height: 100%; /* 設定縮小時也能100%展開sidebar info */
     margin-bottom: 20px;
   }
+
+  /* 大螢幕上的展開效果 */
+  .sidebar.active {
+    max-height: 100%; /* 展開後的高度 */
+  }
+
   /**
    * CUSTOM PROPERTY
    */
