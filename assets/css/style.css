@@ -1338,7 +1338,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 /* 響應式設計 */
-@media (max-width: 500px) {/* 768 */
+@media (max-width: 768px) {/* 768 */
   .weather-news-container {
     flex-direction: column; /* 在小螢幕上，兩個區塊將堆疊顯示 */
   }
@@ -1359,7 +1359,7 @@ textarea.form-input::-webkit-resizer { display: none; }
  * responsive larger than 450px screen
  */
 
-@media (min-width: 225px) {
+@media (min-width: 450px) {
 
   /**
    * client
