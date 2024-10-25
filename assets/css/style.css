@@ -1228,10 +1228,6 @@ textarea.form-input::-webkit-resizer { display: none; }
   #WEATHER AND NEWS STYLING - HIGH-END DESIGN
 \*-----------------------------------*/
 
-/*-----------------------------------*\
-  #WEATHER AND NEWS STYLING - HIGH-END DESIGN
-\*-----------------------------------*/
-
 /* 容納天氣資訊與新聞的主要容器 */
 .weather-news-container {
   display: flex;
@@ -1342,7 +1338,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 /* 響應式設計 */
-@media (max-width: 768px) {
+@media (max-width: 500px) {/* 768 */
   .weather-news-container {
     flex-direction: column; /* 在小螢幕上，兩個區塊將堆疊顯示 */
   }
@@ -1363,7 +1359,7 @@ textarea.form-input::-webkit-resizer { display: none; }
  * responsive larger than 450px screen
  */
 
-@media (min-width: 450px) {
+@media (min-width: 225px) {
 
   /**
    * client
