@@ -161,7 +161,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector('form[data-form]');
   const cityInput = document.getElementById('city');
-  const weatherInfo = document.querySelector('.weather-info');
+  const weatherInfo = document.querySelector('.weather-data');
 
   // 處理回車鍵按下事件
   cityInput.addEventListener('keypress', function (event) {
@@ -189,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);  // 檢查返回的數據
       if (data.weather) {
         // 更新天氣資訊到頁面
         weatherInfo.innerHTML = `
