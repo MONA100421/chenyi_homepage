@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_mail import Mail, Message
 from flask_cors import CORS
 from dotenv import load_dotenv
+from livereload import Server
 import requests
 import os
 import logging
@@ -37,7 +38,7 @@ def fetch_weather_data(city):
         response = requests.get(url)
         response.raise_for_status()  # 檢查是否有錯誤的狀態碼
         data = response.json()
-        print(f"API Response Data: {data}")
+        logger.info(f"API Response Data: {data}")
         
         # 檢查 API 返回的狀態碼是否為 200
         if data.get('cod') != 200:
@@ -71,7 +72,7 @@ def get_weather():
         weather_data = fetch_weather_data(city)
         
         if not weather_data:
-            return jsonify({'error': f'Wow, you sure {city} is on Earth?'}), 400
+            return jsonify({'error': f'Unable to find weather data for {city}.'}), 400
         
         return jsonify({'weather': weather_data})
     except Exception as e:
@@ -81,18 +82,27 @@ def get_weather():
 # 聯絡表單提交處理路由
 @app.route('/submit', methods=['POST'])
 def submit():
-    fullname = request.form['fullname']
-    email = request.form['email']
-    message = request.form['message']
+    fullname = request.form.get('fullname')
+    email = request.form.get('email')
+    message = request.form.get('message')
+
+    # 檢查提交數據
+    if not fullname or not email or not message:
+        return jsonify({'error': 'All form fields are required.'}), 400
 
     # 創建郵件
     msg = Message("New Form Submission",
                   sender=app.config['MAIL_USERNAME'],
                   recipients=["she050623@gmail.com"])  # 改成你的收件人 email
     msg.body = f"Fullname: {fullname}\nEmail: {email}\nMessage: {message}"
-    mail.send(msg)
 
-    return "Form submitted successfully and email sent!"
+    try:
+        mail.send(msg)
+        logger.info("Email sent successfully.")
+        return "Form submitted successfully and email sent!"
+    except Exception as e:
+        logger.error(f"Error sending email: {e}")
+        return jsonify({'error': 'Failed to send email. Please try again later.'}), 500
 
 # 聯絡頁面處理路由
 @app.route('/contact')
@@ -105,4 +115,8 @@ def contact():
 
 # 主程序
 if __name__ == '__main__':
-    app.run(debug=True)
+    # 使用 livereload 來自動重新加載應用
+    server = Server(app.wsgi_app)
+    server.watch('templates/*')  # 監控模板文件的變化
+    server.watch('static/*')  # 監控靜態文件（如 CSS, JS 等）的變化
+    server.serve(port=5000, host='127.0.0.1')  # 啟動帶有 LiveReload 的伺服器
